@@ -1,69 +1,86 @@
 import React, { useEffect, useState } from 'react';
 import ContactsCard from '../Cards/contactsCard';
+import CalendarCard from '../Cards/calendarCard';
+import SlackCard from '../Cards/slackCard';
+import TwitterCard from '../Cards/twitterCard';
+import DropBoxCard from '../Cards/dropboxCard';
 
 export default function SearchResults(props){
-    // console.log(props.query);
     const [query, setQuery] = useState("");
-    const [contactResults, setContactresults] = useState([]);
-    // console.log(dropBoxResults);
+    const [results, setResults] = useState([]);
+
     useEffect(() => {
-       // console.log("mounted");
         setQuery(props.query);
-    }, []);
+	}, []);
+	
     useEffect(() => {
-        //console.log("unmount")
-        fetch('./acme-search/contacts.json')
-        .then((response) => response.json())
-        .then((data) => {
-            if(props.query.length!=0){
-                // console.log("fetched")
-            let res = [];
-            let query_string = props.query.val.toLowerCase();
-            // console.log(query_string);
-            let query_terms = query_string.split(" ");
-            for(let i = 0;i<data.contacts.length;i++)
-            {
-                let count = 0;
-                // console.log(data.contacts[i].matching_terms);
-                // console.log(query_terms);
-                let matching_terms = data.contacts[i].matching_terms;
-                // console.log(matching_terms);
-                for(let word of query_terms)
-                {
-                   for(let term of matching_terms)
-                   {
-                       if(word === term)
-                        {
-                            count++;
-                            break;
-                        }
-                   }
-                }
-                if(count>0)
-                {
-                    data.contacts[i]["count"] = count;
-                    data.contacts[i]["catgeory"] = "contacts";
-                    res.push(data.contacts[i]);
-                }
-                    
-            }
-            res.sort((a,b) => b["count"]-a["count"]);
-            //console.log(res);
-          setContactresults(res);
-        }
-           //console.log(contacts);
-  })
+		let initialPath = "./acme-search/";
+		let categories = [
+			"calendar",
+			"contacts",
+			"dropbox",
+			"slack",
+			"tweet"
+		];
+		let res = [];
+		for(let category of categories) {
+			fetch(initialPath+category+".json")
+			.then((response) => response.json())
+			.then((data) => {
+				if(props.query.length!=0){
+					let query_string = props.query.val.toLowerCase();
+					let query_terms = query_string.split(" ");
+					for(let i = 0;i<data[category].length;i++)
+					{
+						let count = 0;
+						let matching_terms = data[category][i].matching_terms;
+						
+						for(let word of query_terms)
+						{
+							for(let term of matching_terms){
+								if(word === term){
+									count++;
+									break;
+								}
+							}
+						}
+						if(count>0){
+							data[category][i]["count"] = count;
+							//data.contacts[i]["count"] = count;
+							data[category][i]["searchCategory"] = category;
+							//data.contacts[i]["category"] = "contacts";
+							res.push(data[category][i]);
+						}
+					}
+				}
+  			})
+		}
+		res.sort((a,b) => b["count"]-a["count"]);
+		setResults(res);
+		console.log(res);
     }, [props.query]);
-    // console.log(query);
+    
     if(props.query === "")
-    return null;
+    	return null;
     else{
-        const cards = contactResults.map(res => <ContactsCard info = {res}/>);
-        // console.log(contactResults);
+		const cards = results.map(res => {
+			if (res.searchCategory === "contacts") {
+				return <ContactsCard info = {res} />;
+			} else if (res.searchCategory === "calendar") {
+				return <CalendarCard info = {res} />;
+			} else if (res.searchCategory === "dropbox") {
+				return <DropBoxCard info = {res} />;
+			} else if (res.searchCategory === "slack") {
+				return <SlackCard info = {res} />;
+			} else if (res.searchCategory === "tweet") {
+				return <TwitterCard info = {res} />;
+			}
+		}
+		//<ContactsCard info = {res}/>
+		);
         return(
-       <div>
-            {cards}
-       </div>
-        );
-    }
+			<div>
+				{cards}
+			</div>
+		)};
 }

@@ -17,7 +17,7 @@ function App() {
   // const [checkedSlack, setCheckedSlack] = useState(true);
   // const [checkedCalendar, setCheckedCalendar] = useState(true);
   // const [checkedContacts, setCheckedContacts] = useState(true);
-console.log(query);
+
   return(
   <React.Fragment>
     <SearchBar getQuery = {(value) => setQuery(value)}/>

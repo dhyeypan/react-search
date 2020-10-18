@@ -5,7 +5,6 @@ import './cards.css'
 
 export default function ContactsCard(props)
 {
-
     let phones="";
     for(let i = 0;i<props.info.phones.length;i++)
     {
