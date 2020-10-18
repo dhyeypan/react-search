@@ -1,11 +1,12 @@
 import React from 'react';
 import {Card} from 'react-bootstrap';
 import {RiContactsFill} from 'react-icons/ri';
+import * as day from  '../../utils/DateUtils';
 import './cards.css'
 
 export default function ContactsCard(props)
 {
-
+    console.log(day.timeago(props.info.last_contact));
     let phones="";
     for(let i = 0;i<props.info.phones.length;i++)
     {
@@ -24,7 +25,7 @@ export default function ContactsCard(props)
                     <RiContactsFill className="mr-2" size={22} color={'#f6b128'}/>
                     <Card.Text>{props.info.name}</Card.Text>
                 </div>
-                <Card.Text>{props.info.last_contact}</Card.Text>
+                <Card.Text>{day.timeago(props.info.last_contact)} </Card.Text>
             </Card.Header>
             <Card.Body>
                 <Card.Title>{props.info.company}</Card.Title>
