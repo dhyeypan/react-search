@@ -11,11 +11,12 @@ export default function SearchResults(props){
         setQuery(props.query);
     }, []);
     useEffect(() => {
+        setQuery(props.query);
         //console.log("unmount")
         fetch('./acme-search/contacts.json')
         .then((response) => response.json())
         .then((data) => {
-            if(props.query.length!=0){
+            if(props.query.length!==0){
                 // console.log("fetched")
             let res = [];
             let query_string = props.query.val.toLowerCase();
@@ -55,9 +56,11 @@ export default function SearchResults(props){
   })
     }, [props.query]);
     // console.log(query);
-    if(props.query === "")
+    if(query === "")
     return null;
     else{
+        if(contactResults.length === 0)
+            return (<p style={{fontSize : 24}} className="text-center font-weight-bold mt-3">No Results</p>);
         const cards = contactResults.map(res => <ContactsCard info = {res}/>);
         // console.log(contactResults);
         return(

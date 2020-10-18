@@ -29,22 +29,23 @@ export default function SearchBar(props) {
                     }}
                 />
                 <Button variant="outline-light" onClick={() => props.getQuery(query)}>Search</Button>
+                <Button className="ml-1"variant="outline-light">Clear</Button>
                 </div>  
                 <div className="searchFilters mx-auto mt-5">
                     <div className="checkBoxFilter px-3">
-                    <Form.Check checked={true} /><SiGooglecalendar color="white" size={24}/>
+                    <Form.Check checked={props.checkedCalendar} onClick={props.calendarChange} /><SiGooglecalendar color="white" size={24}/>
                     </div>
                     <div className="checkBoxFilter px-3">
-                    <Form.Check checked={true}/><FaTwitter color="white" size={24}/>
+                    <Form.Check checked={props.checkedTwitter} onClick={props.twitterChange} /><FaTwitter color="white" size={24}/>
                     </div>
                     <div className="checkBoxFilter px-3">
-                    <Form.Check checked={true}/><FaSlack color="white" size={24}/>
+                    <Form.Check checked={props.checkedSlack} onClick={props.slackChange}/><FaSlack color="white" size={24}/>
                     </div>
                     <div className="checkBoxFilter px-3">
-                    <Form.Check checked={true}/><FaDropbox color="white" size={24}/>
+                    <Form.Check checked={props.checkedDropbox} onClick={props.dropboxChange}/><FaDropbox color="white" size={24}/>
                     </div>
                     <div className="checkBoxFilter px-3">
-                    <Form.Check checked={true}/><RiContactsFill color="white" size={24}/>
+                    <Form.Check checked={props.checkedContacts} onClick={props.contactsChange}/><RiContactsFill color="white" size={24}/>
                     </div>
                 </div>
             </Form>
