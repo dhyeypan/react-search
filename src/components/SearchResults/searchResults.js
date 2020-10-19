@@ -12,7 +12,9 @@ export default function SearchResults(props){
     }, []);
     useEffect(() => {
         setQuery(props.query);
+        let categories = ["calendar", "contacts", "dropbox", "slack", "tweet"]
         //console.log("unmount")
+        
         fetch('./acme-search/contacts.json')
         .then((response) => response.json())
         .then((data) => {
