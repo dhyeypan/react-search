@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {Navbar, Form, FormControl, Button} from 'react-bootstrap';
 // import {Text} from
 import {SiGooglecalendar} from 'react-icons/si';
@@ -9,6 +9,7 @@ import './searchbar.css'
 
 export default function SearchBar(props) {
     const[query, setQuery] = useState("");
+    const inputRef = useRef();
     // console.log("Nav");    
     return( 
         <Navbar expand="lg" className="mainSearchBar my-auto">
@@ -27,9 +28,18 @@ export default function SearchBar(props) {
                             props.getQuery(query);
                         } 
                     }}
+                    ref = {inputRef}
                 />
                 <Button variant="outline-light" onClick={() => props.getQuery(query)}>Search</Button>
-                <Button className="ml-1"variant="outline-light">Clear</Button>
+                <Button className="ml-1"variant="outline-light" onClick={
+                    () => {
+                        setQuery("");
+                        inputRef.current = "";
+                        props.resetEverything();
+                    }
+                }>
+                    Clear
+                </Button>
                 </div>  
                 <div className="searchFilters mx-auto mt-5">
                     <div className="checkBoxFilter px-3">
