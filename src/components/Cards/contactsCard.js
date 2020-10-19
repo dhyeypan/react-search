@@ -6,7 +6,6 @@ import './cards.css'
 
 export default function ContactsCard(props)
 {
-    console.log(day.dateformat("2019-01-10 10:00:00"));
     let phones="";
     for(let i = 0;i<props.info.phones.length;i++)
     {
