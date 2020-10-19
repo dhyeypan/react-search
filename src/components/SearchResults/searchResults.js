@@ -26,7 +26,9 @@ export default function SearchResults(props){
 		];
 		let res = [];
 		for(let category of categories) 
-		{
+		{  
+            if(props[category] === false)
+                continue;
 			fetch(initialPath+category+".json")
 			.then((response) => response.json())
 			.then((data) => {
@@ -65,13 +67,13 @@ export default function SearchResults(props){
 			console.log(results.length); // array length is 3 - after two seconds
 		 }, 100);
 		// console.log(answer);
-	}, [props.query]);
+	}, [props.query, props.tweet, props.dropbox, props.calendar, props.contacts, props.slack]);
 	
 	
     if(props.query === "")
     	return null;
     else{
-        if(contactResults.length === 0)
+        if(results.length === 0)
             return (<p style={{fontSize : 24}} className="text-center font-weight-bold mt-3">No Results</p>);
 		let cards = [];
 		let displayResults = answer;

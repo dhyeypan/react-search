@@ -11,7 +11,7 @@ import SearchResults from './components/SearchResults/searchResults'
 
 
 function App() {
-  const[query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
   const [checkedDropbox, setCheckedDropbox] = useState(true);
   const [checkedTwitter, setCheckedTwitter] = useState(true);
   const [checkedSlack, setCheckedSlack] = useState(true);
@@ -36,7 +36,7 @@ function App() {
     <SearchResults 
       query = {query} 
       calendar = {checkedCalendar}
-      twitter = {checkedTwitter}
+      tweet = {checkedTwitter}
       slack = {checkedSlack}
       dropbox = {checkedDropbox}
       contacts = {checkedContacts}
