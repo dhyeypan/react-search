@@ -5,25 +5,28 @@ import SlackCard from '../Cards/slackCard';
 import TwitterCard from '../Cards/twitterCard';
 import DropBoxCard from '../Cards/dropboxCard';
 
+let answer = [];
+
 export default function SearchResults(props){
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
 
-    useEffect(() => {
-        setQuery(props.query);
-	}, []);
+    // useEffect(() => {
+    //     setQuery(props.query);
+	// }, []);
 	
     useEffect(() => {
 		let initialPath = "./acme-search/";
 		let categories = [
+			"slack",
 			"calendar",
 			"contacts",
 			"dropbox",
-			"slack",
 			"tweet"
 		];
 		let res = [];
-		for(let category of categories) {
+		for(let category of categories) 
+		{
 			fetch(initialPath+category+".json")
 			.then((response) => response.json())
 			.then((data) => {
@@ -46,41 +49,52 @@ export default function SearchResults(props){
 						}
 						if(count>0){
 							data[category][i]["count"] = count;
-							//data.contacts[i]["count"] = count;
 							data[category][i]["searchCategory"] = category;
-							//data.contacts[i]["category"] = "contacts";
 							res.push(data[category][i]);
+							console.log(res.length);
 						}
 					}
+					res.sort((a,b) => b["count"]-a["count"]);
 				}
   			})
 		}
-		res.sort((a,b) => b["count"]-a["count"]);
-		setResults(res);
-		console.log(res);
-    }, [props.query]);
-    
-    if(props.query === "")
-    	return null;
-    else{
-		const cards = results.map(res => {
-			if (res.searchCategory === "contacts") {
-				return <ContactsCard info = {res} />;
-			} else if (res.searchCategory === "calendar") {
-				return <CalendarCard info = {res} />;
-			} else if (res.searchCategory === "dropbox") {
-				return <DropBoxCard info = {res} />;
-			} else if (res.searchCategory === "slack") {
-				return <SlackCard info = {res} />;
-			} else if (res.searchCategory === "tweet") {
-				return <TwitterCard info = {res} />;
+		answer = res;
+		
+		setTimeout(function(){
+			setResults(res);
+			console.log(results.length); // array length is 3 - after two seconds
+		 }, 100);
+		// console.log(answer);
+	}, [props.query]);
+	
+	
+    // if(props.query === "")
+    // 	return null;
+    // else{
+		let cards = [];
+		let displayResults = answer;
+		console.log(answer);
+		console.log(answer.length);
+		for(let i = 0; i < displayResults.length; i++) {
+			if (displayResults[i].searchCategory === "contacts") {
+				cards.push(<ContactsCard info = {displayResults[i]} key={i}/>);
+			} else if (displayResults[i].searchCategory === "calendar") {
+				cards.push(<CalendarCard info = {displayResults[i]} key={i}/>);
+			} else if (displayResults[i].searchCategory === "dropbox") {
+				cards.push(<DropBoxCard info = {displayResults[i]} key={i}/>);
+			} else if (displayResults[i].searchCategory === "slack") {
+				cards.push(<SlackCard info = {displayResults[i]} key={i}/>);
+			} else if (displayResults[i].searchCategory === "tweet") {
+				cards.push(<TwitterCard info = {displayResults[i]} key={i}/>);
+			}
+			else{
+				console.log("Hi");
 			}
 		}
-		//<ContactsCard info = {res}/>
-		);
+		
         return(
 			<div>
 				{cards}
 			</div>
-		)};
+		);//}
 }
