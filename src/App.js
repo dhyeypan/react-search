@@ -12,16 +12,35 @@ import SearchResults from './components/SearchResults/searchResults'
 
 function App() {
   const[query, setQuery] = useState("");
-  // const [checkedDropbox, setCheckedDropbox] = useState(true);
-  // const [checkedTwitter, setCheckedTwitter] = useState(true);
-  // const [checkedSlack, setCheckedSlack] = useState(true);
-  // const [checkedCalendar, setCheckedCalendar] = useState(true);
-  // const [checkedContacts, setCheckedContacts] = useState(true);
-
+  const [checkedDropbox, setCheckedDropbox] = useState(true);
+  const [checkedTwitter, setCheckedTwitter] = useState(true);
+  const [checkedSlack, setCheckedSlack] = useState(true);
+  const [checkedCalendar, setCheckedCalendar] = useState(true);
+  const [checkedContacts, setCheckedContacts] = useState(true);
+// console.log(query);
   return(
   <React.Fragment>
-    <SearchBar getQuery = {(value) => setQuery(value)}/>
-    <SearchResults query = {query}/>
+    <SearchBar 
+      getQuery = {(value) => setQuery(value)} 
+      checkedDropbox={checkedDropbox} 
+      dropboxChange={() => setCheckedDropbox(!checkedDropbox)}
+      checkedCalendar={checkedCalendar}
+      calendarChange={() => setCheckedCalendar(!checkedCalendar)}
+      checkedTwitter={checkedTwitter}
+      twitterChange={() => setCheckedTwitter(!checkedTwitter)}
+      checkedSlack={checkedSlack}
+      slackChange={() => setCheckedSlack(!checkedSlack)}
+      checkedContacts={checkedContacts}
+      contactsChange={() => setCheckedContacts(!checkedContacts)}
+    />
+    <SearchResults 
+      query = {query} 
+      calendar = {checkedCalendar}
+      twitter = {checkedTwitter}
+      slack = {checkedSlack}
+      dropbox = {checkedDropbox}
+      contacts = {checkedContacts}
+      />
   </React.Fragment>);
 }
 
