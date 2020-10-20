@@ -1,6 +1,5 @@
 .mainSearchBar{
-    height: 450px;
-    align-items: center;
+    height: 500px;
     background-color: #415aff;
     font-family: 'Roboto', sans-serif;
     display: flex;
@@ -11,16 +10,15 @@
     width: 300px !important;
 }
 
-
-.titleText{
+.mainTitleText{
     margin-top: 10%;
-    color: white;
+    color: #fffdf5;
     font-size: 60px;
 }
 
 .searchForm{
     display: flex;
-    flex-direction: column;
+	flex-direction: column;
 }
 
 .searchFilters{

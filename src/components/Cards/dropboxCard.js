@@ -44,7 +44,7 @@ export default function DropBoxCard(props)
         </Card.Header>
         <Card.Body>
             <Card.Text>
-            {props.info.path}
+            Path: {props.info.path}
             </Card.Text>
 			<Card.Text>
 				Shared With: {sharedWith.substring(0, sharedWith.length-2)}

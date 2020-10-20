@@ -104,7 +104,7 @@ export default function SearchResults(props){
 		}
 		
         return(
-			<div>
+			<div style={{backgroundColor: '#fffdf5'}}>
 				{pinnedCards}
 				{cards}
 			</div>

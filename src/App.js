@@ -14,7 +14,7 @@ function App() {
   const [pinnedUpdate, setPinnedUpdate] = useState(true);
 	
   return(
-  <React.Fragment>
+  <React.Fragment style={{backgroundColor: "#fffdf5"}}>
     <SearchBar 
       getQuery = {(value) => setQuery(value)} 
       resetEverything = {(value) => {
