@@ -9,12 +9,12 @@ let answer = [];
 
 export default function SearchResults(props){
     const [query, setQuery] = useState("");
-    const [results, setResults] = useState([]);
+	const [results, setResults] = useState([]);
 
-    // useEffect(() => {
-    //     setQuery(props.query);
-	// }, []);
-	
+	function handlePin() {
+		props.pinUpdate();
+	}
+
     useEffect(() => {
 		let initialPath = "./acme-search/";
 		let categories = [
@@ -32,7 +32,7 @@ export default function SearchResults(props){
 			fetch(initialPath+category+".json")
 			.then((response) => response.json())
 			.then((data) => {
-				if(props.query.length!=0){
+				if(props.query.length!==0){
 					let query_string = props.query.val.toLowerCase();
 					let query_terms = query_string.split(" ");
 					for(let i = 0;i<data[category].length;i++)
@@ -53,7 +53,6 @@ export default function SearchResults(props){
 							data[category][i]["count"] = count;
 							data[category][i]["searchCategory"] = category;
 							res.push(data[category][i]);
-							console.log(res.length);
 						}
 					}
 					res.sort((a,b) => b["count"]-a["count"]);
@@ -64,41 +63,51 @@ export default function SearchResults(props){
 		
 		setTimeout(function(){
 			setResults(res);
-			console.log(results.length); // array length is 3 - after two seconds
-		 }, 100);
-		// console.log(answer);
+		}, 20);
 	}, [props.query, props.tweet, props.dropbox, props.calendar, props.contacts, props.slack]);
-	
 	
     if(props.query === "")
     	return null;
     else{
         if(results.length === 0)
-            return (<p style={{fontSize : 24}} className="text-center font-weight-bold mt-3">No Results</p>);
+			return (<p style={{fontSize : 24}} className="text-center font-weight-bold mt-5">Sorry, there were no matching results!</p>);
+			
 		let cards = [];
+		let pinnedCards = [];
 		let displayResults = answer;
-		console.log(answer);
-		console.log(answer.length);
+	
 		for(let i = 0; i < displayResults.length; i++) {
-			if (displayResults[i].searchCategory === "contacts") {
-				cards.push(<ContactsCard info = {displayResults[i]} key={i}/>);
-			} else if (displayResults[i].searchCategory === "calendar") {
-				cards.push(<CalendarCard info = {displayResults[i]} key={i}/>);
-			} else if (displayResults[i].searchCategory === "dropbox") {
-				cards.push(<DropBoxCard info = {displayResults[i]} key={i}/>);
-			} else if (displayResults[i].searchCategory === "slack") {
-				cards.push(<SlackCard info = {displayResults[i]} key={i}/>);
-			} else if (displayResults[i].searchCategory === "tweet") {
-				cards.push(<TwitterCard info = {displayResults[i]} key={i}/>);
+			if(localStorage.getItem(displayResults[i].id) !== null) {
+				if (displayResults[i].searchCategory === "contacts") {
+					pinnedCards.push(<ContactsCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
+				} else if (displayResults[i].searchCategory === "calendar") {
+					pinnedCards.push(<CalendarCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
+				} else if (displayResults[i].searchCategory === "dropbox") {
+					pinnedCards.push(<DropBoxCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
+				} else if (displayResults[i].searchCategory === "slack") {
+					pinnedCards.push(<SlackCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
+				} else if (displayResults[i].searchCategory === "tweet") {
+					pinnedCards.push(<TwitterCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
+				}
 			}
-			else{
-				console.log("Hi");
+			else if (displayResults[i].searchCategory === "contacts") {
+				cards.push(<ContactsCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
+			} else if (displayResults[i].searchCategory === "calendar") {
+				cards.push(<CalendarCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
+			} else if (displayResults[i].searchCategory === "dropbox") {
+				cards.push(<DropBoxCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
+			} else if (displayResults[i].searchCategory === "slack") {
+				cards.push(<SlackCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
+			} else if (displayResults[i].searchCategory === "tweet") {
+				cards.push(<TwitterCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
 			}
 		}
 		
         return(
 			<div>
+				{pinnedCards}
 				{cards}
 			</div>
-		);}
+		);
+	}
 }
