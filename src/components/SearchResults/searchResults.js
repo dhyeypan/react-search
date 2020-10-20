@@ -106,12 +106,13 @@ export default function SearchResults(props){
 		}
 		let len = pinnedCards.length + cards.length;
         return(
-			<div>
+				
+			<div style={{backgroundColor: '#fffdf5'}}>
 				{(len > 2) && scroll.scrollMore(300)}
 				{pinnedCards}
 				{cards}
 				<div className="text-center">
-				{ (len >= 3) && <Button className="text-center" onClick={() => {scroll.scrollToTop({behavior: "smooth"});}}> 
+				{ (len >= 3) && <Button className="text-center mb-5" onClick={() => {scroll.scrollToTop({behavior: "smooth"});}}> 
 								Back to Top 
 								</Button>}
 				</div>

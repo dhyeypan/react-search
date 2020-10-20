@@ -10,8 +10,8 @@ export default function SearchBar(props) {
 	const inputRef = useRef();
 
     return( 
-        <Navbar expand="lg" className="mainSearchBar my-auto">
-            <p className="titleText">Acme Search</p>
+        <Navbar  className="mainSearchBar my-auto">
+            <p className="mainTitleText">Acme Search</p>
             <Form inline className="mx-auto searchForm">
                 <div>
 					<FormControl 
@@ -30,7 +30,7 @@ export default function SearchBar(props) {
 						ref = {inputRef}
 					/>
 					<Button variant="outline-light" onClick={() => props.getQuery(query)}>Search</Button>
-					<Button className="ml-1"variant="outline-light" onClick={
+					<Button className="ml-2"variant="outline-light" onClick={
 						() => {
 							setQuery("");
 							inputRef.current.value = "";
