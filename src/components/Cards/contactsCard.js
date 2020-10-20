@@ -40,7 +40,7 @@ export default function ContactsCard(props)
                     <Card.Text>{props.info.name}</Card.Text>
                 </div>
 				<div className="d-flex">
-					<Card.Text className="m-0">{day.timeago(props.info.last_contact)} </Card.Text>
+					<Card.Text className="m-0">Last contacted {day.timeago(props.info.last_contact)} </Card.Text>
 					{!isPinned && <AiOutlinePushpin size={20} className="ml-3" 
 							onClick={() => pinResult(props.info.id)} />}
 					{isPinned && <AiFillPushpin size={20} className='ml-3' 

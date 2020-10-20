@@ -65,7 +65,7 @@ export default function SearchResults(props){
 		
 		setTimeout(function(){
 			setResults(res);
-		}, 20);
+		}, 100);
 	}, [props.query, props.tweet, props.dropbox, props.calendar, props.contacts, props.slack]);
 	
     if(props.query === "")
@@ -108,7 +108,6 @@ export default function SearchResults(props){
         return(
 				
 			<div style={{backgroundColor: '#fffdf5'}}>
-				{(len > 2) && scroll.scrollMore(300)}
 				{pinnedCards}
 				{cards}
 				<div className="text-center">

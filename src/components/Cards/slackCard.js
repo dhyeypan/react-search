@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Card} from 'react-bootstrap';
 import {FaSlack} from 'react-icons/fa';
 import {AiFillPushpin, AiOutlinePushpin} from 'react-icons/ai';
+import * as day from '../../utils/DateUtils'
 import './cards.css'
 
 export default function SlackCard(props)
@@ -28,7 +29,7 @@ export default function SlackCard(props)
 					<Card.Text>{props.info.channel}</Card.Text>
 				</div>
 				<div className="d-flex">
-					<Card.Text className="m-0">{props.info.timestamp}</Card.Text>
+					<Card.Text className="m-0">{day.calendarTime(props.info.last_contact)}</Card.Text>
 					{!isPinned && <AiOutlinePushpin size={20} className="ml-3" 
 						onClick={() => pinResult(props.info.id)} />}
 					{isPinned && <AiFillPushpin size={20} className='ml-3' 
