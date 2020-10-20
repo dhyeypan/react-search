@@ -33,6 +33,7 @@ export default function SearchBar(props) {
 					<Button className="ml-1"variant="outline-light" onClick={
 						() => {
 							setQuery("");
+							inputRef.current.value = "";
 							props.resetEverything();
 						}
 					}>

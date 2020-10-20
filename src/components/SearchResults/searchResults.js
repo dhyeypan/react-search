@@ -4,12 +4,14 @@ import CalendarCard from '../Cards/calendarCard';
 import SlackCard from '../Cards/slackCard';
 import TwitterCard from '../Cards/twitterCard';
 import DropBoxCard from '../Cards/dropboxCard';
+import { Button } from 'react-bootstrap';
+import {animateScroll as scroll} from 'react-scroll';
 
 let answer = [];
 
 export default function SearchResults(props){
     const [query, setQuery] = useState("");
-	const [results, setResults] = useState([]);
+    const [results, setResults] = useState([]);
 
 	function handlePin() {
 		props.pinUpdate();
@@ -102,11 +104,18 @@ export default function SearchResults(props){
 				cards.push(<TwitterCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
 			}
 		}
-		
+		let len = pinnedCards.length + cards.length;
         return(
 			<div>
+				{(len > 2) && scroll.scrollMore(300)}
 				{pinnedCards}
 				{cards}
+				<div className="text-center">
+				{ (len >= 3) && <Button className="text-center" onClick={() => {scroll.scrollToTop({behavior: "smooth"});}}> 
+								Back to Top 
+								</Button>}
+				</div>
+				
 			</div>
 		);
 	}
