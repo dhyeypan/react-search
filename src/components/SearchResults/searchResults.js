@@ -11,29 +11,35 @@ let answer = [];
 
 export default function SearchResults(props){
     const [query, setQuery] = useState("");
-    const [results, setResults] = useState([]);
+	const [results, setResults] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	function handlePin() {
 		props.pinUpdate();
 	}
 
     useEffect(() => {
+		setLoading(true);
 		let initialPath = "./acme-search/";
 		let categories = [
 			"slack",
 			"calendar",
 			"contacts",
-			"dropbox",
-			"tweet"
+			"tweet",
+			"dropbox"
 		];
 		let res = [];
+		
 		for(let category of categories) 
 		{  
+			
             if(props[category] === false)
                 continue;
 			fetch(initialPath+category+".json")
 			.then((response) => response.json())
 			.then((data) => {
+				// if(j === 5)
+				// 	setLoading(false);
 				if(props.query.length!==0){
 					let query_string = props.query.val.toLowerCase();
 					let query_terms = query_string.split(" ");
@@ -59,28 +65,30 @@ export default function SearchResults(props){
 					}
 					res.sort((a,b) => b["count"]-a["count"]);
 				}
-  			})
+			  })
 		}
 		answer = res;
 		
 		setTimeout(function(){
+			setLoading(false);
 			setResults(res);
 		}, 100);
+
+		
+
 	}, [props.query, props.tweet, props.dropbox, props.calendar, props.contacts, props.slack]);
 	
     if(props.query === "")
     	return null;
     else{
-		let noResults = [];
-		setTimeout(() => {
-			console.log("HI");
-			if(answer.length === 0) {
-				console.log("HELLO");
-				noResults.push(<p style={{fontSize : 24}} className="text-center font-weight-bold mt-5">Sorry, there were no matching results!</p>);
-				console.log("HELLO AFTER");
-			}
-		}, 200);
-        
+		if(loading) {
+			return(<p style={{fontSize : 24, color: "#fffdf5"}} className="text-center font-weight-bold mt-5">Loading...</p>)
+		}
+		
+		if(results.length === 0) {
+			return(<p style={{fontSize : 24}} className="text-center font-weight-bold mt-5">Sorry, there were no matching results!</p>);
+		}
+
 		let cards = [];
 		let pinnedCards = [];
 		let displayResults = answer;
@@ -116,7 +124,6 @@ export default function SearchResults(props){
 		
         return(
 			<div style={{backgroundColor: '#fffdf5'}}>
-				{noResults}
 				{pinnedCards}
 				{cards}
 				<div className="text-center">

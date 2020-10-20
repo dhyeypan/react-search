@@ -8,10 +8,16 @@ export function timeago(date){
     return then.from(now);
 }
 
-export function dateformat(date)
+export function calendarTime(date)
 {
-    var calendar = require('dayjs/plugin/calendar');
-    dayjs.extend(calendar);
-    var time = date.split(" ")[0];
-    var time2 = date.split(" ")[1];
+    var localizedFormat = require('dayjs/plugin/localizedFormat');
+    dayjs.extend(localizedFormat);
+    return dayjs(date).format('llll');
+}
+
+export function dropboxTime(date)
+{
+    var localizedFormat = require('dayjs/plugin/localizedFormat');
+    dayjs.extend(localizedFormat);
+    return dayjs(date).format('LL'); 
 }
