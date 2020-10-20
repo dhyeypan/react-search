@@ -65,15 +65,22 @@ export default function SearchResults(props){
 		
 		setTimeout(function(){
 			setResults(res);
-		}, 20);
+		}, 100);
 	}, [props.query, props.tweet, props.dropbox, props.calendar, props.contacts, props.slack]);
 	
     if(props.query === "")
     	return null;
     else{
-        if(results.length === 0)
-			return (<p style={{fontSize : 24}} className="text-center font-weight-bold mt-5">Sorry, there were no matching results!</p>);
-			
+		let noResults = [];
+		setTimeout(() => {
+			console.log("HI");
+			if(answer.length === 0) {
+				console.log("HELLO");
+				noResults.push(<p style={{fontSize : 24}} className="text-center font-weight-bold mt-5">Sorry, there were no matching results!</p>);
+				console.log("HELLO AFTER");
+			}
+		}, 200);
+        
 		let cards = [];
 		let pinnedCards = [];
 		let displayResults = answer;
@@ -104,15 +111,18 @@ export default function SearchResults(props){
 				cards.push(<TwitterCard info = {displayResults[i]} key={i} pin={() => handlePin()}/>);
 			}
 		}
+
 		let len = pinnedCards.length + cards.length;
+		
         return(
-				
 			<div style={{backgroundColor: '#fffdf5'}}>
-				{(len > 2) && scroll.scrollMore(300)}
+				{noResults}
 				{pinnedCards}
 				{cards}
 				<div className="text-center">
-				{ (len >= 3) && <Button className="text-center mb-5" onClick={() => {scroll.scrollToTop({behavior: "smooth"});}}> 
+				{(len >= 3) && <Button 	className="text-center mb-5 backToTop" 
+										onClick={() => {scroll.scrollToTop({behavior: "smooth"});}}
+										style={{backgroundColor: "#415aff", color: "#fffdf5"}}> 
 								Back to Top 
 								</Button>}
 				</div>
