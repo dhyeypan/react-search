@@ -3,6 +3,7 @@ import {Card} from 'react-bootstrap';
 import {SiGooglecalendar} from 'react-icons/si';
 import {AiFillPushpin, AiOutlinePushpin} from 'react-icons/ai';
 import * as day from '../../utils/DateUtils'
+import ReactTooltip from 'react-tooltip';
 import './cards.css'
 
 export default function CalendarCard(props)
@@ -32,10 +33,11 @@ export default function CalendarCard(props)
             </div>
 			<div className="d-flex">
 				<Card.Text className="m-0">{day.calendarTime(props.info.date)}</Card.Text>
-				{!isPinned && <AiOutlinePushpin size={20} className="ml-3" 
-						onClick={() => pinResult(props.info.id)} />}
-				{isPinned && <AiFillPushpin size={20} className='ml-3' 
-					onClick={() => unpinResult(props.info.id)}/>}
+				<ReactTooltip place="top" effect="solid"/>
+					{!isPinned && <AiOutlinePushpin size={20} className="ml-3" 
+						onClick={() => pinResult(props.info.id)} data-tip="Pin"/>}
+					{isPinned && <AiFillPushpin size={20} className='ml-3' 
+						onClick={() => unpinResult(props.info.id)} data-tip = "Unpin"/>}
 			</div>
         </Card.Header>
         <Card.Body>

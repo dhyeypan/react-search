@@ -23,8 +23,8 @@ export default function SearchResults(props){
 			"slack",
 			"calendar",
 			"contacts",
-			"dropbox",
-			"tweet"
+			"tweet",
+			"dropbox"
 		];
 		let res = [];
 		for(let category of categories) 

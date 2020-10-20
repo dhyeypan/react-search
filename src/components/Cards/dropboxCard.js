@@ -3,6 +3,7 @@ import {Card} from 'react-bootstrap';
 import {FaDropbox} from 'react-icons/fa';
 import {AiFillPushpin, AiOutlinePushpin} from 'react-icons/ai';
 import * as day from '../../utils/DateUtils'
+import ReactTooltip from 'react-tooltip';
 import './cards.css'
 
 export default function DropBoxCard(props)
@@ -36,10 +37,11 @@ export default function DropBoxCard(props)
             </div>
 			<div className="d-flex">
 				<Card.Text className="m-0">Created on {day.dropboxTime(props.info.created)}</Card.Text>
-				{!isPinned && <AiOutlinePushpin size={20} className="ml-3" 
-						onClick={() => pinResult(props.info.id)} />}
-				{isPinned && <AiFillPushpin size={20} className='ml-3' 
-					onClick={() => unpinResult(props.info.id)}/>}
+				<ReactTooltip place="top" effect="solid"/>
+					{!isPinned && <AiOutlinePushpin size={20} className="ml-3" 
+						onClick={() => pinResult(props.info.id)} data-tip="Pin"/>}
+					{isPinned && <AiFillPushpin size={20} className='ml-3' 
+						onClick={() => unpinResult(props.info.id)} data-tip = "Unpin"/>}
 			</div>
             
         </Card.Header>

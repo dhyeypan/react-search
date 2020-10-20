@@ -3,6 +3,7 @@ import {Card} from 'react-bootstrap';
 import {FaSlack} from 'react-icons/fa';
 import {AiFillPushpin, AiOutlinePushpin} from 'react-icons/ai';
 import * as day from '../../utils/DateUtils'
+import ReactTooltip from 'react-tooltip';
 import './cards.css'
 
 export default function SlackCard(props)
@@ -22,6 +23,7 @@ export default function SlackCard(props)
 	}
 
     return(
+		
         <Card className="dropBoxCard mt-3 mx-auto shadow-sm">
 			<Card.Header className="font-weight-bold d-flex justify-content-between align-items-center">
 				<div className="d-flex">
@@ -30,10 +32,11 @@ export default function SlackCard(props)
 				</div>
 				<div className="d-flex">
 					<Card.Text className="m-0">{day.calendarTime(props.info.last_contact)}</Card.Text>
+					<ReactTooltip place="top" effect="solid"/>
 					{!isPinned && <AiOutlinePushpin size={20} className="ml-3" 
-						onClick={() => pinResult(props.info.id)} />}
+						onClick={() => pinResult(props.info.id)} data-tip="Pin"/>}
 					{isPinned && <AiFillPushpin size={20} className='ml-3' 
-						onClick={() => unpinResult(props.info.id)}/>}
+						onClick={() => unpinResult(props.info.id)} data-tip = "Unpin"/>}
 				</div>
 			</Card.Header>
 			<Card.Body>
